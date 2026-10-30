@@ -29,4 +29,3 @@ The service preview selects the corresponding rates category. Rates use accessib
 Scroll motion is position-bound and reversible. Entry transforms reveal once. Reduced-motion users see all content immediately, with the travelling comb hidden. The comb also hides on mobile.
 
 The site starts private on Sites. Hosting identity is saved in `.openai/hosting.json`; preserve it on updates.
-

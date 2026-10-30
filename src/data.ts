@@ -28,4 +28,3 @@ export const textures = {
  wavy:{path:'M70 160 C130 65 200 65 260 160 S390 255 450 160 S580 65 650 160',finish:'Soft / flowing',care:'Texture-conscious styling',approach:'Work with your natural movement'},
  curly:{path:'M65 160 C65 50 180 50 180 150 C180 240 90 240 105 155 C120 65 290 65 290 150 C290 240 200 240 215 155 C230 65 400 65 400 150 C400 240 310 240 325 155 C340 65 510 65 510 150 C510 240 420 240 435 155 C450 65 620 65 650 160',finish:'Defined / expressive',care:'Moisture & curl-conscious care',approach:'Celebrate your natural pattern'}
 };
-
