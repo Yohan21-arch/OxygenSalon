@@ -29,3 +29,15 @@ The service preview selects the corresponding rates category. Rates use accessib
 Scroll motion is position-bound and reversible. Entry transforms reveal once. Reduced-motion users see all content immediately, with the travelling comb hidden. The comb also hides on mobile.
 
 The site starts private on Sites. Hosting identity is saved in `.openai/hosting.json`; preserve it on updates.
+
+## Interactive v2 (review branch)
+
+React Router provides `/`, `/services`, `/services/:category`, `/makeovers`, `/staff`, `/about`, `/book`, and an unknown-route fallback. Configure production hosting to rewrite unknown paths to `index.html` for direct links; Vite dev and preview already support this.
+
+The new implementation lives in `src/pages/`, `src/components/`, `src/sections/`, and `src/hooks/`. `src/data.ts` remains the single source of salon placeholder content. `src/style.css` preserves the original design; `src/v2.css` adds the interactive layer.
+
+The six-step booking flow accepts validated category/service search parameters and retains selections while moving back and forward between steps. It sends no requests and reports that the backend is not connected. Personal details stay in component memory and are not persisted.
+
+`BeforeAfterSlider` supports mouse, touch and keyboard through a labelled native range input. The paired-image list remains empty until genuine pairs are supplied. Empty gallery categories show honest coming-soon states.
+
+Opening motion runs once per session; reduced motion skips it. The native dialog-based mobile menu and lightbox provide focus containment and Escape handling. This branch is for review only; it has not been merged or deployed over the live site.
