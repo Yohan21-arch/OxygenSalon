@@ -9,18 +9,11 @@ export const services: {id:string; title:string; description:string; items:Servi
  {id:'bridal',title:'Bridal / occasion',description:'For the moments you will remember.',items:[{name:'Bridal Consultation',description:'Plan your look, from first idea to final detail',duration:'To be confirmed',price:null}]}
 ];
 export const photo = (id:string,w=900) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=85`;
-export const heroPhoto='photo-1524504388940-b1c1722653e1';
 export const gallery = [
  {image:'photo-1524504388940-b1c1722653e1',category:'Makeup',title:'Quiet confidence',alt:'Editorial reference portrait with natural makeup'},
  {image:'photo-1522337360788-8b13dee7a37e',category:'Hair',title:'A softer silhouette',alt:'Reference photograph of hair styling in a salon'},
  {image:'photo-1519014816548-bf5fe059798b',category:'Nails',title:'The smallest details',alt:'Reference photograph of a polished manicure'},
  {image:'photo-1487412947147-5cebf100ffc2',category:'Beauty',title:'Beautifully yourself',alt:'Editorial beauty portrait used as a placeholder'}
-];
-export const staff = [
- {id:'hair-artist',name:'Meet your hair artist',role:'Senior Hair Artist',specialisation:'Cut · colour · texture',description:'An individual approach to shape, movement and everyday wear.',image:'photo-1580489944761-15a19d654956'},
- {id:'nail-artist',name:'Meet your nail artist',role:'Nail Artist',specialisation:'Precision · polish · art',description:'Careful preparation and a thoughtful eye for the smallest details.',image:'photo-1534528741775-53994a69daeb'},
- {id:'makeup-artist',name:'Meet your makeup artist',role:'Makeup Artist',specialisation:'Beauty · bridal · occasion',description:'Soft definition and expressive looks that still feel like you.',image:'photo-1531123897727-8f129e1688ce'},
- {id:'skin-specialist',name:'Meet your skin specialist',role:'Skin Specialist',specialisation:'Consultation · personalised care',description:'Considered rituals with comfort and healthy skin at their heart.',image:'photo-1551836022-d5d88e9218df'}
 ];
 export const salon = {name:'Oxygen',tagline:'makeover matters',address:null,phone:null,instagram:null,whatsapp:null,openingHours:null};
 export const textures = {
