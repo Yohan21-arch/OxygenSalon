@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
-import { services, staff, gallery, salon, textures, photo, heroPhoto } from '../data';
 import Label from './Label';
 import Actions from './Actions';
 import SpreadWordmark from './SpreadWordmark';

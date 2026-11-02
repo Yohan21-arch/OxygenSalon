@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { services, staff, gallery, salon, textures, photo, heroPhoto } from '../data';
-import Label from './Label';
+import { textures } from '../data';
 export default function TextureDemo() { const [variant, setVariant] = useState<keyof typeof textures>('wavy'); const ref = useRef<SVGPathElement>(null); const panel = useRef<HTMLDivElement>(null); const facts = textures[variant]; useEffect(() => { const path = ref.current; if (!path)
     return; let frame = 0; const media = matchMedia('(prefers-reduced-motion: reduce)'); const draw = () => { path.style.transition = 'none'; const length = path.getTotalLength(); path.style.strokeDasharray = `${length}`; path.style.strokeDashoffset = media.matches ? '0' : `${length}`; frame = requestAnimationFrame(() => { path.getBoundingClientRect(); path.style.transition = media.matches ? 'none' : 'stroke-dashoffset 2s ease'; path.style.strokeDashoffset = '0'; }); }; const observer = new IntersectionObserver(entries => { if (entries[0].isIntersecting) {
     draw();
