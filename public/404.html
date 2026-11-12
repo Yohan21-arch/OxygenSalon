@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Oxygen — redirecting</title></head><body><p>Opening Oxygen… <a href="/OxygenSalon/">Return home</a></p><script>
+const base = '/OxygenSalon/';
+if (location.pathname.startsWith(base)) {
+  const route = location.pathname.slice(base.length);
+  location.replace(base + '#/' + route + location.search);
+}
+</script></body></html>

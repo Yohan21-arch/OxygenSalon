@@ -43,3 +43,7 @@ The five-step booking flow accepts validated category/service search parameters 
 Opening motion runs once per session; reduced motion skips it. The native dialog-based mobile menu and lightbox provide focus containment and Escape handling. This branch is for review only; it has not been merged or deployed over the live site.
 
 The review theme uses near-black, navy and antique gold. Split panels close for 350ms before routed content changes, then open for 400ms. Reduced motion switches content immediately. The staff feature has been removed.
+
+## GitHub Pages
+
+The main branch workflow runs `npm ci` and `npm run build`, then deploys only `dist/`. Vite uses `/OxygenSalon/` as its asset base. HashRouter keeps routes such as `/OxygenSalon/#/services/hair` refreshable on static hosting. The custom 404 page forwards old clean nested URLs into their hash route, preserving query parameters. GitHub Pages must use GitHub Actions as its publishing source.
