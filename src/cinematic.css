@@ -1,0 +1,26 @@
+/* Motion adapted from Scene.mp4: vertical panels, cropped typography, held imagery. */
+:root{--cinema-ease:cubic-bezier(.76,0,.24,1)}
+.services-invitation{background:var(--secondary)}.services-invitation .section-heading{margin-bottom:0}.services-invitation .button{flex-shrink:0}
+/* Two full-height curtains cover before the route swaps, then travel upward in sequence. */
+.split-panel{top:0;bottom:0;height:100%;width:50%;right:auto;transition:transform 320ms var(--cinema-ease);background:var(--background)}
+.split-top{left:0;transform:translateY(101%)}.split-bottom{left:50%;transform:translateY(101%);transition-delay:40ms;background:var(--secondary)}
+.split-closing .split-panel{transform:translateY(0)}.split-opening .split-panel{transform:translateY(-101%);transition-duration:500ms}.split-opening .split-bottom{transition-delay:60ms}
+.split-rule{top:0;bottom:0;left:50%;right:auto;width:1px;height:auto}.transition-signature{position:absolute;left:50%;top:50%;transform:translate(-50%,calc(-50% + 14px));font:32px 'Newsreader',serif;opacity:0;transition:opacity 100ms,transform 180ms}.transition-signature>span{color:var(--accent)}.split-closing .transition-signature{opacity:1;transform:translate(-50%,-50%);transition-delay:220ms}
+.route-closing{opacity:1;transform:translateY(-18px) scale(.986)}.route-opening{animation:cinema-page 560ms var(--cinema-ease) both}
+@keyframes cinema-page{from{transform:translateY(32px);clip-path:inset(12% 0 0)}to{transform:none;clip-path:inset(0)}}
+.route-opening .page-section>h1,.route-opening .category-hero h1{animation:cinema-title 600ms 90ms var(--cinema-ease) both}
+.title-mask{display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em}.title-mask>span,.title-mask>em{display:block;animation:cinema-title 760ms var(--cinema-ease) both}.title-mask:nth-child(2)>em{animation-delay:95ms}.hero-copy h1{min-height:3.15em}
+@keyframes cinema-title{from{transform:translateY(110%) rotate(2deg)}to{transform:none}}
+.cinematic-portrait{overflow:hidden;isolation:isolate}.portrait-underlay{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.portrait-reveal{position:absolute;inset:0;z-index:1;animation:cinema-image-mask 850ms var(--cinema-ease) both}.portrait-reveal img{width:100%;height:100%;object-fit:cover;animation:cinema-image-scale 1100ms var(--cinema-ease) both}.cinematic-portrait figcaption{z-index:2}.cinematic-portrait .slide-progress{position:absolute;bottom:0;left:0;right:0;z-index:2}
+@keyframes cinema-image-mask{from{clip-path:inset(100% 0 0)}to{clip-path:inset(0)}}@keyframes cinema-image-scale{from{transform:scale(1.09) translateY(3%)}to{transform:scale(1) translateY(0)}}
+/* Entry masks coordinate the heading, copy, and image rather than fading the whole section. */
+.motion .reveal{transform:none;transition:none}.motion .reveal.visible>h2,.motion .reveal.visible>h3{animation:cinema-section-title 700ms var(--cinema-ease) both}.motion .reveal.visible>p{animation:cinema-section-title 700ms 100ms var(--cinema-ease) both}.motion .gallery-photo.reveal.visible .image-crop{animation:cinema-image-mask 800ms var(--cinema-ease) both}.motion .gallery-photo.reveal.visible img{animation:cinema-image-scale 1100ms var(--cinema-ease) both}.motion .gallery-photo.reveal.visible figcaption{animation:cinema-section-title 500ms 170ms var(--cinema-ease) both}
+@keyframes cinema-section-title{from{clip-path:inset(100% 0 0);transform:translateY(22px)}to{clip-path:inset(0);transform:none}}
+@media(max-width:760px){.services-invitation .button{margin-top:24px}.hero-copy h1{min-height:4.15em}.transition-signature{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.split-transition,.opening{display:none!important}.route-page,.route-opening .page-section>h1,.route-opening .category-hero h1,.title-mask>span,.title-mask>em,.portrait-reveal,.portrait-reveal img,.motion .reveal.visible>* ,.motion .gallery-photo.reveal.visible .image-crop,.motion .gallery-photo.reveal.visible img{animation:none!important;transform:none!important;clip-path:none!important;transition:none!important}.route-closing{opacity:1!important}.portrait-underlay{display:none}}
+
+.hero-changing .title-mask>span,.hero-changing .title-mask>em{animation:cinema-title-out 180ms var(--cinema-ease) both}.hero-changing .title-mask:nth-child(2)>em{animation-delay:25ms}@keyframes cinema-title-out{to{transform:translateY(-110%) rotate(-2deg)}}
+@media(prefers-reduced-motion:reduce){.hero-changing .title-mask>span,.hero-changing .title-mask>em{animation:none!important}}
+
+/* Give homepage image masks a real box before lazy images load. */
+.gallery-section .gallery-photo .image-crop{display:block;width:100%}

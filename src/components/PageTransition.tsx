@@ -7,11 +7,11 @@ export default function PageTransition({ children }: { children: (location: Loca
     const reduced = useReducedMotion();
     const [displayed, setDisplayed] = useState(requested);
     const [phase, setPhase] = useState<'idle' | 'closing' | 'opening'>('idle');
-    const lastRequest = useRef(requested.key);
+    const lastRequest = useRef(requested);
 
     useEffect(() => {
-        if (lastRequest.current === requested.key && !reduced) return;
-        lastRequest.current = requested.key;
+        if (lastRequest.current === requested && !reduced) return;
+        lastRequest.current = requested;
         if (reduced) {
             setDisplayed(requested);
             setPhase('idle');
@@ -21,10 +21,12 @@ export default function PageTransition({ children }: { children: (location: Loca
         const switchTimer = setTimeout(() => {
             setDisplayed(requested);
             setPhase('opening');
-        }, 350);
-        const finishTimer = setTimeout(() => setPhase('idle'), 750);
+        }, 360);
+        const finishTimer = setTimeout(() => setPhase('idle'), 920);
         return () => { clearTimeout(switchTimer); clearTimeout(finishTimer); };
     }, [requested, reduced]);
+
+    useEffect(() => { document.documentElement.classList.toggle('motion', !reduced); return () => document.documentElement.classList.remove('motion'); }, [reduced]);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'instant' });
@@ -33,19 +35,19 @@ export default function PageTransition({ children }: { children: (location: Loca
         }));
         document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
         return () => observer.disconnect();
-    }, [displayed.key]);
+    }, [displayed]);
 
     useEffect(() => {
         if (phase !== 'idle') return;
         const frame = requestAnimationFrame(() => document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true }));
         return () => cancelAnimationFrame(frame);
-    }, [phase, displayed.key]);
+    }, [phase, displayed]);
 
     return <>
-        <main id="main" className={`route-page route-${phase}`} inert={phase === 'closing'}>{children(displayed)}</main>
+        <main id="main" tabIndex={-1} className={`route-page route-${phase}`} inert={phase === 'closing'}>{children(displayed)}</main>
         <div className={`split-transition split-${phase}`} aria-hidden="true">
             <div className="split-panel split-top"/><div className="split-panel split-bottom"/>
-            <span className="split-rule"/>
+            <span className="split-rule"/><span className="transition-signature">OXYGEN<span>.</span></span>
         </div>
     </>;
 }

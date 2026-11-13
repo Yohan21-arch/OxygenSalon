@@ -4,3 +4,5 @@ import App from './App';
 import './style.css';
 import './v2.css';
 createRoot(document.getElementById('root')!).render(<HashRouter><App/></HashRouter>);
+
+import './cinematic.css';
