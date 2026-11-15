@@ -5,6 +5,20 @@ import useReducedMotion from '../hooks/useReducedMotion';
 import SpreadWordmark from '../components/SpreadWordmark';
 const slides = [['The Oxygen approach', 'Beauty that still', 'feels like you.', 0], ['Hair / texture', 'Your texture.', 'Your way.', 1], ['Occasions', 'For moments', 'worth remembering.', 3]] as const;
 export default function Hero() {
+    const hero = useRef<HTMLElement>(null);
+    const [motionReady, setMotionReady] = useState(false);
+    useEffect(() => {
+        // Observe the existing intro/navigation; never change their timing or state.
+        const check = () => {
+            if (document.querySelector('.opening') || !hero.current?.closest('.route-idle')) return;
+            setMotionReady(true);
+            observer.disconnect();
+        };
+        const observer = new MutationObserver(check);
+        observer.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class']});
+        check();
+        return () => observer.disconnect();
+    }, []);
     const [{index, previous}, setSlide] = useState({index:0, previous:0});
     const indexRef = useRef(0); const request = useRef(0); const [changing, setChanging] = useState(false);
     const setIndex = (next: number | ((i:number)=>number)) => {
@@ -26,7 +40,7 @@ export default function Hero() {
         object.style.opacity = String(Math.max(0, 1 - t * 1.2));
         object.style.visibility = t > .84 ? 'hidden' : 'visible';
     } }); }; window.addEventListener('scroll', update, { passive: true }); update(); return () => { window.removeEventListener('scroll', update); cancelAnimationFrame(frame); }; }, []);
-    return <section className="hero" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={e => { if (!e.currentTarget.contains(e.relatedTarget))
-        setFocused(false); }} aria-roledescription="carousel" aria-label="Oxygen introduction"><div className="hero-main"><div className={`hero-copy ${changing ? "hero-changing" : ""}`}><p className="eyebrow">Female beauty & makeover studio / {slide[0]}</p><h1 tabIndex={-1} key={`heading-${index}`}><span className="title-mask"><span>{slide[1]}</span></span><span className="title-mask"><em>{slide[2]}</em></span></h1><p className="lede">Hair, hands, nails, skin and finishing touches — thoughtfully brought together under one roof.</p><div className="actions"><Link className="button" to="/book">Book an appointment ↗</Link><Link className="text-link" to="/services">Explore services ↗</Link></div><p className="hero-note">✳ A space for women. A moment for yourself.</p><div className="slider-controls"><button aria-label="Previous hero slide" onClick={() => setIndex((index + 2) % 3)}>←</button><span aria-live="polite">{changing ? "Loading…" : `0${index + 1} — 03`}</span><button aria-label="Next hero slide" onClick={() => setIndex((index + 1) % 3)}>→</button><button onClick={() => setPaused(!paused)}>{paused ? 'Play' : 'Pause'}</button></div></div><figure className="hero-portrait cinematic-portrait"><img className="portrait-underlay" src={photo(gallery[slides[previous][3]].image)} alt="" aria-hidden="true"/><div className="portrait-reveal" key={`image-${index}`}><img src={photo(gallery[slide[3]].image)} alt={gallery[slide[3]].alt}/></div><figcaption>{slide[0]} / EDITORIAL PLACEHOLDER</figcaption><div className="slide-progress" key={index} style={{ animationPlayState: stopped ? 'paused' : 'running' }}/></figure></div><div className="hero-strip">{services.map(s => <Link key={s.id} to={`/services/${s.id}`}>{s.title}</Link>)}</div><SpreadWordmark hero/></section>;
+    return <section ref={hero} data-motion-ready={motionReady} className="hero" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={e => { if (!e.currentTarget.contains(e.relatedTarget))
+        setFocused(false); }} aria-roledescription="carousel" aria-label="Oxygen introduction"><div className="hero-main"><div className={`hero-copy ${changing ? "hero-changing" : ""}`}><p className="eyebrow">Female beauty & makeover studio / {slide[0]}</p><h1 tabIndex={-1} key={`heading-${index}`}><span className="title-mask"><span>{slide[1]}</span></span><span className="title-mask"><em>{slide[2]}</em></span></h1><p className="lede">Hair, hands, nails, skin and finishing touches — thoughtfully brought together under one roof.</p><div className="actions"><Link className="button" to="/book">Book an appointment ↗</Link><Link className="text-link" to="/services">Explore services ↗</Link></div><p className="hero-note">✳ A space for women. A moment for yourself.</p><div className="slider-controls"><button aria-label="Previous hero slide" onClick={() => setIndex((index + 2) % 3)}>←</button><span aria-live="polite">{changing ? "Loading…" : `0${index + 1} — 03`}</span><button aria-label="Next hero slide" onClick={() => setIndex((index + 1) % 3)}>→</button><button onClick={() => setPaused(!paused)}>{paused ? 'Play' : 'Pause'}</button></div></div><figure className="hero-portrait cinematic-portrait"><img className="portrait-underlay" src={photo(gallery[slides[previous][3]].image)} alt="" aria-hidden="true"/><div className="portrait-reveal" key={`image-${index}`}><div className="editorial-camera" style={{animationPlayState: paused || reduced || changing || !motionReady ? "paused" : "running"}}><img src={photo(gallery[slide[3]].image)} alt={gallery[slide[3]].alt}/></div></div><figcaption>{slide[0]} / EDITORIAL PLACEHOLDER</figcaption><div className="slide-progress" key={index} style={{ animationPlayState: stopped ? 'paused' : 'running' }}/></figure></div><div className="hero-strip">{services.map(s => <Link key={s.id} to={`/services/${s.id}`}>{s.title}</Link>)}</div><SpreadWordmark hero/></section>;
 }
 

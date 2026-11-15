@@ -1,0 +1,99 @@
+/* Additive editorial motion. Opening, sliding navigation and texture typography are isolated. */
+:root {
+    --editorial-duration: 760ms;
+    --editorial-caption-duration: 520ms;
+    --editorial-camera-duration: 4800ms;
+    --editorial-ease: cubic-bezier(.22,.61,.36,1);
+    --editorial-stagger: 110ms;
+    --editorial-depth: 1400px;
+    --editorial-distance: 28px;
+}
+.hero {
+    background-image: radial-gradient(ellipse at 85% 25%,rgba(176,141,87,.065),transparent 62%);
+}
+.editorial-camera { width:100%; height:100%; }
+.hero-portrait::after {
+    content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(150deg,rgba(236,232,223,.06),transparent 45%,rgba(8,11,18,.18));
+}
+@media (prefers-reduced-motion:no-preference) {
+    /* The image's extra layer moves independently of the existing image mask. */
+    .editorial-camera {
+        animation:editorial-camera var(--editorial-camera-duration) var(--editorial-ease) both;
+    }
+    .route-closing .editorial-camera { animation-play-state:paused!important; }
+    .hero-copy:not(.hero-changing) .title-mask > :is(span,em) {
+        animation-name:editorial-type;
+        animation-duration:var(--editorial-duration);
+        animation-timing-function:var(--editorial-ease);
+    }
+    .hero-copy:not(.hero-changing) .title-mask:nth-child(2) > em {
+        animation-delay:var(--editorial-stagger);
+    }
+    .hero-copy > .eyebrow, .hero-copy > .lede, .hero-copy > .hero-note {
+        animation:editorial-copy var(--editorial-caption-duration) var(--editorial-ease) both;
+    }
+    .hero-copy > .lede { animation-delay:var(--editorial-stagger); }
+    .hero-copy > .hero-note { animation-delay:calc(var(--editorial-stagger) * 2); }
+    .motion :is(.philosophy,.services-invitation,.gallery-section) .reveal.visible > :is(h2,h3,p,div) {
+        animation:editorial-copy var(--editorial-duration) var(--editorial-ease) both;
+    }
+    .motion :is(.philosophy,.services-invitation,.gallery-section) .reveal.visible > :is(p,div) {
+        animation-delay:var(--editorial-stagger);
+    }
+    :is(.motion .gallery-photo.reveal.visible,.gallery-photo.editorial-entered) .image-crop {
+        animation:editorial-image var(--editorial-duration) var(--editorial-ease) both;
+    }
+    :is(.motion .gallery-photo.reveal.visible,.gallery-photo.editorial-entered) img {
+        animation:none;
+    }
+    :is(.motion .gallery-photo.reveal.visible,.gallery-photo.editorial-entered) figcaption {
+        animation:editorial-copy var(--editorial-caption-duration) var(--editorial-ease) both;
+        animation-delay:calc(var(--editorial-stagger) * 2);
+    }
+    .gallery-photo:focus-within .image-crop { animation:none; }
+    .gallery-photo:focus-within figcaption { animation:none; }
+    .gallery-results { animation:none; }
+}
+@media (min-width:1024px) and (prefers-reduced-motion:no-preference) {
+    /* Existing passive hero scroll tracking supplies a bounded value, no new loop. */
+    .hero-portrait { translate:0 calc(var(--scroll) * -.012px); }
+    .hero-copy { translate:0 calc(var(--scroll) * -.004px); }
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+    .gallery-photo img { transition:transform var(--editorial-duration) var(--editorial-ease); }
+    .gallery-photo:is(:hover,:focus-within) img {
+        transform:perspective(var(--editorial-depth)) rotateY(-1deg) scale(1.035);
+    }
+}
+@media (max-width:760px) {
+    :root { --editorial-distance:10px; --editorial-stagger:60ms; --editorial-duration:620ms; }
+}
+@keyframes editorial-camera {
+    from { transform:scale(1.02) translate3d(-.5%,0,0); }
+    to { transform:scale(1.09) translate3d(.5%,-.5%,0); }
+}
+@keyframes editorial-type {
+    from { transform:translate3d(0,102%,0); }
+    to { transform:translate3d(0,0,0); }
+}
+@keyframes editorial-copy {
+    from { opacity:.4; transform:translate3d(0,var(--editorial-distance),0); clip-path:inset(0 0 10% 0); }
+    to { opacity:1; transform:translate3d(0,0,0); clip-path:inset(0); }
+}
+@keyframes editorial-image {
+    from { clip-path:inset(35% 0 0 0); transform:translate3d(0,var(--editorial-distance),0); }
+    to { clip-path:inset(0); transform:translate3d(0,0,0); }
+}
+@media (prefers-reduced-motion:reduce) {
+    .editorial-camera { animation:none; transform:none; }
+    .hero-portrait,.hero-copy { translate:none; }
+    .gallery-photo.editorial-entered :is(.image-crop,img,figcaption) {
+        animation:none; transition:none; transform:none; clip-path:none; opacity:1;
+    }
+}
+
+/* Start hero entrances only once the original intro/sliding curtains clear. */
+.hero[data-motion-ready="false"] :is(.editorial-camera,.portrait-reveal,.portrait-reveal img,.title-mask > span,.title-mask > em,.eyebrow,.lede,.hero-note) {
+    animation:none!important;
+}
