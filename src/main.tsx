@@ -8,3 +8,6 @@ createRoot(document.getElementById('root')!).render(<HashRouter><App/></HashRout
 import './cinematic.css';
 
 import './editorial-motion.css';
+
+import './cursor.css';
+import './gallery-editorial.css';

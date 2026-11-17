@@ -1,0 +1,14 @@
+/* One native-rendered cursor asset: no overlay, follower, trail or JS listeners. */
+@media (hover:hover) and (pointer:fine) and (forced-colors:none) {
+    body { cursor:url('./assets/oxygen-pointer.svg') 3 4,auto; }
+    :is(p,h1,h2,h3,h4,label,figcaption) { cursor:text; }
+    :is(a,button,summary,[role="button"],.gallery-trigger) { cursor:url('./assets/oxygen-pointer.svg') 3 4,pointer; }
+    :is(input,textarea,[contenteditable="true"]) { cursor:text; }
+    :is(select,input[type="checkbox"],input[type="radio"]) { cursor:auto; }
+    input[type="range"] {cursor:ew-resize;}
+    :is(button,input,select):disabled {cursor:not-allowed;}
+}
+@media (prefers-reduced-motion:reduce), (forced-colors:active) {
+    body {cursor:auto;}
+    :is(a,button,summary,[role="button"],.gallery-trigger) {cursor:pointer;}
+}
