@@ -9,12 +9,12 @@
     --editorial-distance: 28px;
 }
 .hero {
-    background-image: radial-gradient(ellipse at 85% 25%,rgba(176,141,87,.065),transparent 62%);
+    background-image: radial-gradient(ellipse at 85% 25%,rgb(from var(--accent) r g b / .065),transparent 62%);
 }
 .editorial-camera { width:100%; height:100%; }
 .hero-portrait::after {
     content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
-    background:linear-gradient(150deg,rgba(236,232,223,.06),transparent 45%,rgba(8,11,18,.18));
+    background:linear-gradient(150deg,rgb(from var(--text) r g b / .06),transparent 45%,rgb(from var(--background) r g b / .18));
 }
 @media (prefers-reduced-motion:no-preference) {
     /* The image's extra layer moves independently of the existing image mask. */
